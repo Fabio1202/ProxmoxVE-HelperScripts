@@ -16,13 +16,16 @@ update_os
 
 # Installing Dependencies
 msg_info "Installing Dependencies"
-$STD apt-get install -y \
-  curl
+$STD apt-get install -y curl
 msg_ok "Installed Dependencies"
 
-# Setup TVHeadend
-msg_info "Setting up TVHeadend"
+# Download TVHeadend repo
+msg_info "Setting up TVHeadend Repository"
 $STD curl -1sLf 'https://dl.cloudsmith.io/public/tvheadend/tvheadend/setup.deb.sh' | sudo -E bash
+msg_ok "TVHeadend Repository Set Up"
+
+# Installing TVHeadend
+msg_info "Installing TVHeadend"
 $STD apt-get update
 $STD apt-get install -y tvheadend
 
