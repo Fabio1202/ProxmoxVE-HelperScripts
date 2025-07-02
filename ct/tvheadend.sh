@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-source <(curl -fsSL https://raw.githubusercontent.com/Fabio1202/ProxmoxVE-HelperScripts/main/misc/build.func)
+source <(curl -fsSL https://raw.githubusercontent.com/Fabio1202/ProxmoxVE-HelperScripts/refs/heads/add-tvheadend-ct/misc/build.func)
 # Copyright (c) 2021-2025 community-scripts ORG
 # Author: [YourUserName]
 # License: MIT | https://github.com/community-scripts/ProxmoxVE/raw/main/LICENSE
@@ -29,51 +29,7 @@ color
 catch_errors
 
 function update_script() {
-  header_info
-  check_container_storage
-  check_container_resources
-
-  # Check if installation is present | -f for file, -d for folder
-  if [[ ! -f [INSTALLATION_CHECK_PATH] ]]; then
-    msg_error "No ${APP} Installation Found!"
-    exit
-  fi
-
-  # Crawling the new version and checking whether an update is required
-  RELEASE=$(curl -fsSL [RELEASE_URL] | [PARSE_RELEASE_COMMAND])
-  if [[ "${RELEASE}" != "$(cat /opt/${APP}_version.txt)" ]] || [[ ! -f /opt/${APP}_version.txt ]]; then
-    # Stopping Services
-    msg_info "Stopping $APP"
-    systemctl stop [SERVICE_NAME]
-    msg_ok "Stopped $APP"
-
-    # Creating Backup
-    msg_info "Creating Backup"
-    tar -czf "/opt/${APP}_backup_$(date +%F).tar.gz" [IMPORTANT_PATHS]
-    msg_ok "Backup Created"
-
-    # Execute Update
-    msg_info "Updating $APP to v${RELEASE}"
-    [UPDATE_COMMANDS]
-    msg_ok "Updated $APP to v${RELEASE}"
-
-    # Starting Services
-    msg_info "Starting $APP"
-    systemctl start [SERVICE_NAME]
-    msg_ok "Started $APP"
-
-    # Cleaning up
-    msg_info "Cleaning Up"
-    rm -rf [TEMP_FILES]
-    msg_ok "Cleanup Completed"
-
-    # Last Action
-    echo "${RELEASE}" >/opt/${APP}_version.txt
-    msg_ok "Update Successful"
-  else
-    msg_ok "No update required. ${APP} is already at v${RELEASE}"
-  fi
-  exit
+    msg_error "Not supported"
 }
 
 start
